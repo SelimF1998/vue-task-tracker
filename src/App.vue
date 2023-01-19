@@ -54,6 +54,7 @@ export default {
       this.showAddTask = !this.showAddTask
     },
     search(input) {
+      console.log(input)
       this.input = input 
     }
   },
