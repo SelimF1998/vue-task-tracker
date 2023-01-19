@@ -5,7 +5,6 @@
             <div class="font-bold text-xl mb-2">{{task.title}} </div>
             <i @click="onDelete(task.id)" class="fas fa-times mt-2 ml-5 stroke-red-600 cursor-pointer"></i>
           </div>
-          
           <div class="text-gray-700 text-base">
            {{task.description}}
           </div>
@@ -25,8 +24,7 @@ export default {
         onDelete(id) {
             this.$emit('delete-task', id)
         }
-    }
-    
+    }    
 }
 </script>
 <style>

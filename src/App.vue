@@ -2,9 +2,9 @@
 <template>
   <div class="p-12 space-y-5">
     <div class="font-extrabold text-3xl text-red-500 text-center">App</div>
-    <Header :showAddTask="showAddTask" @show-form="showForm" title="Task Tracker" />
+    <Header :showAddTask="showAddTask" @show-form="showForm" @search-input="search" title="Task Tracker" />
     <AddTask :showAddTask="showAddTask" @add-task="addTask" />
-    <Tasks @delete-task="deleteTask" :tasks="tasks" /> 
+    <Tasks @delete-task="deleteTask" :tasks="tasks" :filteredList="filteredList" /> 
   </div>
 </template>
 
@@ -22,13 +22,23 @@ export default {
     Tasks,
     AddTask,
   },
-  emits: ['add-task', 'show-form'],
+  emits: ['add-task', 'show-form', "search-input"],
+  computed: {
+    filteredList() {
+      if (this.input == '') {
+        return this.tasks
+      } else {
+        return this.tasks.filter(t => t.title.toUpperCase().includes(this.input.toUpperCase()))
+      }
+    }
+  },
   data() {
     return {
       tasks: [],
-      showAddTask: false
+      showAddTask: false,
+      input: ''
     }
-  }, 
+  },
   methods: {
     deleteTask(id) {
       if (confirm("Are you sure?")) {
@@ -42,6 +52,9 @@ export default {
     showForm() {
       console.log("clicked")
       this.showAddTask = !this.showAddTask
+    },
+    search(input) {
+      this.input = input 
     }
   },
   created() {
